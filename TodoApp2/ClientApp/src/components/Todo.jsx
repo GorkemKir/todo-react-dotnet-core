@@ -22,10 +22,10 @@ class Todo extends React.Component {
   }
 
   deleteHandler() {
-    this.props.deleteTodo(this.state.todo.id);
+    this.props.deleteTodo(this.props.todo.id);
   }
   completeHandler() {
-    let tempTodo = this.state.todo;
+    let tempTodo = this.props.todo;
     tempTodo.isCompleted = !tempTodo.isCompleted;
     this.props.updateTodo(tempTodo);
   }
