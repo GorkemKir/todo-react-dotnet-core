@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import AddIcon from "@material-ui/icons/Add";
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from "@material-ui/core/IconButton";
+import Divider from "@material-ui/core/Divider";
+import MenuIcon from "@material-ui/icons/Menu";
 
-import { connect } from 'react-redux'
-import { addTodo } from '../redux/actions'
+import { connect } from "react-redux";
+import { addTodo } from "../redux/actions";
+import { Paper, InputBase } from "@material-ui/core";
 
 class TodoForm extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class TodoForm extends Component {
       text: "",
       isCompleted: false,
     };
+
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -24,39 +25,59 @@ class TodoForm extends Component {
     });
   }
   handleSubmit(e) {
-    this.props.addTodo(this.state);
+    const todo = {
+      ...this.state,
+      createdTime: new Date().toISOString(),
+    };
+    this.props.addTodo(todo);
     this.setState({
       text: "",
     });
     e.preventDefault();
   }
+
   render() {
     return (
-      <form className="todo-form" onSubmit={this.handleSubmit}>
-        <FormControl fullWidth variant="outlined" >
-          <InputLabel htmlFor="outlined-adornment-amount">Enter Your Task</InputLabel>
-          <OutlinedInput
-            value={this.state.text}
-            onChange={this.handleChange}
-            labelWidth={120}
-            required
-          /> 
-        </FormControl>
-        <IconButton aria-label="" type="submit">
-          <AddIcon/>
+      <Paper
+        component="form"
+        onSubmit={this.handleSubmit}
+        className="todo-form"
+      >
+        <InputBase
+          className="todo-input"
+          placeholder="Add New Task"
+                onChange={this.handleChange}
+                value={this.state.text}
+          required
+        />
+        {/* <TextField
+          id="datetime-local"
+          label="Deadline"
+          type="datetime-local"
+          defaultValue={new Date().toISOString().substring(0, 16)}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        /> */}
+        <IconButton aria-label="menu" className="icon-button">
+          <MenuIcon />
         </IconButton>
-      </form>
-        
+        <Divider orientation="vertical" className="divider" />
+        <IconButton
+          color="primary"
+          className="icon-button"
+          aria-label="add task"
+          type="submit"
+        >
+          <AddIcon />
+        </IconButton>
+      </Paper>
     );
   }
 }
-const mapStateToProps = state => ({
-})
 
-const mapDispatchToProps = () => ({
-})
+const mapStateToProps = (state) => ({});
 
-export default connect(
-  null,
- {addTodo}
- )(TodoForm);
+const mapDispatchToProps = () => ({});
+
+export default connect(null, { addTodo })(TodoForm);

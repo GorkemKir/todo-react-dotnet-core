@@ -10,5 +10,8 @@ namespace TodoApp.Models
         }
 
         public DbSet<Todo> TodoItems { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+            => options.UseSqlite("Data Source=database.db");
     }
 }

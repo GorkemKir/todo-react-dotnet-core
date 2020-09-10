@@ -45,8 +45,10 @@ namespace TodoApp2
                                         .AllowCredentials();
                                   });
             });
+            //services.AddDbContext<TodoContext>(opt =>
+            //   opt.UseInMemoryDatabase("TodoList"));
             services.AddDbContext<TodoContext>(opt =>
-               opt.UseInMemoryDatabase("TodoList"));
+               opt.UseSqlite("Data Source=database.db"));
             services.AddControllers();
             services.AddSignalR();
         }
